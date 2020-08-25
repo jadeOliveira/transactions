@@ -46,5 +46,7 @@ gradle clean bootJar
 
 - [Consultar conta](documentation/get-account.md):  `GET /accounts/:accountId`
 
+- [Criar transação](documentation/post-transactions.md):  `POST /transactions`
+
   
 
