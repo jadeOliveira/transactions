@@ -1,8 +1,9 @@
 package br.com.pismo.transactions.business.entity;
 
 import br.com.pismo.transactions.business.enumeration.OperationType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,24 +13,27 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "transaction", schema = "pismo")
-@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Transaction implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "operation_type")
-    private OperationType operationType;
+  @Column(name = "operation_type")
+  private OperationType operationType;
 
-    @Column(name = "amount")
-    private BigDecimal amount;
+  @Column(name = "amount")
+  private BigDecimal amount;
 
-    @Column(name = "event_date")
-    private LocalDateTime eventDate;
+  @Column(name = "event_date")
+  private LocalDateTime eventDate;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+  @ManyToOne
+  @JoinColumn(name = "account_id")
+  private Account account;
 
+  public Transaction() {
+  }
 }

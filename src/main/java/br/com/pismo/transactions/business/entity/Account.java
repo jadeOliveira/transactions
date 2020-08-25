@@ -15,14 +15,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Account implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @NotNull
-    @Column(name = "document_number")
-    private String documentNumber;
+  @NotNull
+  @Column(name = "document_number")
+  private String documentNumber;
 
-    public Account() {
-    }
+  public Account() {
+  }
 }

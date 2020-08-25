@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/accounts")
 public class AccountController {
 
-    @NonNull
-    private final AccountService accountService;
+  @NonNull
+  private final AccountService accountService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public AccountDTO find(@RequestParam(name = "accountId") final Long accountId) {
-        return accountService.findById(accountId);
-    }
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public AccountDTO find(@RequestParam(name = "accountId") final Long accountId) {
+    return accountService.findById(accountId);
+  }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public AccountDTO save(@RequestBody final AccountDTO accountDTO) {
-        return accountService.save(accountDTO);
-    }
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public AccountDTO save(@RequestBody final AccountDTO accountDTO) {
+    return accountService.save(accountDTO);
+  }
 
 }

@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    @ExceptionHandler(ApplicationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseErrorMessage handleApplicationException(ApplicationException ex) {
-        ResponseErrorMessage responseMsg = new ResponseErrorMessage(ex.getMessage());
-        return responseMsg;
-    }
+  @ExceptionHandler(ApplicationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseErrorMessage handleApplicationException(ApplicationException ex) {
+    ResponseErrorMessage responseMsg = new ResponseErrorMessage(ex.getMessage());
+    return responseMsg;
+  }
 }

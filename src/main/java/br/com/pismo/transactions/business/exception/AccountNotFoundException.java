@@ -2,9 +2,9 @@ package br.com.pismo.transactions.business.exception;
 
 public class AccountNotFoundException extends ApplicationException {
 
-    private static final String errorMsg = "Número de documento inválido!";
+  private static final String errorMsg = "Conta não encontrada!";
 
-    public AccountNotFoundException() {
-        super("Conta não encontrada!");
-    }
+  public AccountNotFoundException() {
+    super(errorMsg);
+  }
 }
