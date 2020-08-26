@@ -22,7 +22,7 @@ public class AccountService {
 
   public AccountDTO findById(Long id) {
     return findOptionalById(id).map(this::entityToDTO)
-        .orElseThrow(() -> new AccountNotFoundException());
+        .orElseThrow(AccountNotFoundException::new);
   }
 
   public AccountDTO save(AccountDTO accountDTO) {

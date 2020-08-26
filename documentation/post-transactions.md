@@ -43,36 +43,43 @@
 ```
 
 
-### ERRO
+### ERROS DE NEGÓCIO
 
-#### Conta não encontrada
+#### Conta não encontrada!
 
 **Código** : `400`
 
 **Request Body**
-
 ```
 {"accountId":"999", "operationTypeId":"1","amount":"100.25"}
 ```
 **Response Body**
-
 ```
 {"message": "Conta não encontrada!"}
 ```
 
-#### Conta não encontrada
+#### Tipo de operação inválido!
 
 **Código** : `400`
 
 **Request Body**
-
 ```
 {"accountId":"1", "operationTypeId":"5","amount":"100.25"}
 ```
 **Response Body**
-
 ```
-{
-    "message": "Tipo de operação inválido!"
-}
+{"message": "Tipo de operação inválido!"}
+```
+
+#### Valor da transação inválido!
+
+**Código** : `400`
+
+**Request Body**
+```
+{"accountId":"1", "operationTypeId":"5","amount":""}
+```
+**Response Body**
+```
+{"message": "Valor da transação inválido!"}
 ```

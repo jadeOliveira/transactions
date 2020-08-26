@@ -5,12 +5,27 @@ Aplicação Spring Boot 2.3 para contas e transações.
 
 ## Requisitos do projeto
 
-- Gradle 6.5
+- Gradle 6.6
 - OpenJDK 14.0.1
+- Docker
 
 ## Configurações do projeto
 
-Para executar a aplicação em ambiente de desenvolvimento, configurar o arquivo application.properties conforme abaixo:
+Abrir o arquivo compose/docker-compose.yml e configurar o volume para um diretório local:
+
+```yaml
+volumes:
+    - /C/dev/docker/mysql/mysql_data:/var/lib/mysql
+```
+
+Executar o comando docker-compose para subir o container:
+
+```bash
+docker-compose up -d
+```
+
+
+Caso seja necessário alterar as configurações do BD devido a alterações no docker-composeyaml, editar o arquivo application.properties e alterar as propriedades abaixo:
 
 ```
 spring.datasource.url=jdbc:mysql://localhost:3306/pismo

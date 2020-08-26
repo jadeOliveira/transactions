@@ -17,17 +17,12 @@ Criação de uma conta através de um endpoint que aceita os dados da conta em f
 **Request Body**
 
 ```
-{
-     "documentNumber":"1234567890"
-}
+{ "documentNumber":"1234567890" }
 ```
 **Response Body**
 
 ```
-{
-    "id": 5,
-    "documentNumber": "1234567890"
-}
+{ "id": 5,"documentNumber": "1234567890" }
 ```
 ### ERRO
 
@@ -36,14 +31,10 @@ Criação de uma conta através de um endpoint que aceita os dados da conta em f
 **Request Body**
 
 ```
-{
-   "documentNumber":"ABC"
-}
+{ "documentNumber":"ABC" }
 ```
 **Response Body**
 
 ```
-{
-    "message": "Número de documento não informado ou inválido!"
-}
+{ "message": "Número de documento não informado ou inválido!" }
 ```
