@@ -5,9 +5,11 @@ import br.com.pismo.transactions.business.entity.Account;
 import br.com.pismo.transactions.business.entity.Transaction;
 import br.com.pismo.transactions.business.enumeration.OperationType;
 import br.com.pismo.transactions.business.exception.AccountNotFoundException;
+import br.com.pismo.transactions.business.exception.TransactionAmountInvalidException;
 import br.com.pismo.transactions.business.repository.TransactionRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +34,19 @@ public class TransactionService {
 
     Account account = accountService.findOptionalById(transactionDTO.getAccountId())
         .orElseThrow(() -> new AccountNotFoundException());
+
     OperationType operationType = OperationType.findById(transactionDTO.getOperationTypeId());
+
+    BigDecimal amount = Optional.ofNullable(transactionDTO.getAmount())
+        .map(o -> calculateAmount(operationType, transactionDTO.getAmount()))
+        .orElseThrow(() -> new TransactionAmountInvalidException());
 
     Transaction transaction = Transaction
         .builder()
         .account(account)
         .operationType(operationType)
         .eventDate(LocalDateTime.now())
-        .amount(calculateAmount(operationType, transactionDTO.getAmount()))
+        .amount(amount)
         .build();
 
     return transaction;

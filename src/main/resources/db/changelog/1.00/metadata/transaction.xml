@@ -18,7 +18,7 @@
             <column name="operation_type" type="tinyint">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="amount" type="currency">
+            <column name="amount" type="decimal(15, 2)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="event_date" type="datetime">

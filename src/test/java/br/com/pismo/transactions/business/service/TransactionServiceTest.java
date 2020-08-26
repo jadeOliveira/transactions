@@ -1,13 +1,12 @@
 package br.com.pismo.transactions.business.service;
 
-import br.com.pismo.transactions.business.dto.AccountDTO;
 import br.com.pismo.transactions.business.dto.TransactionDTO;
 import br.com.pismo.transactions.business.entity.Account;
 import br.com.pismo.transactions.business.entity.Transaction;
 import br.com.pismo.transactions.business.enumeration.OperationType;
 import br.com.pismo.transactions.business.exception.AccountNotFoundException;
-import br.com.pismo.transactions.business.exception.InvalidDocumentNumber;
 import br.com.pismo.transactions.business.exception.OperationTypeNotFoundException;
+import br.com.pismo.transactions.business.exception.TransactionAmountInvalidException;
 import br.com.pismo.transactions.business.repository.TransactionRepository;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Assertions;
@@ -25,8 +24,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyChar;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,46 +48,61 @@ class TransactionServiceTest {
   private ArgumentCaptor<Transaction> transactionArgumentCaptor;
 
   private TransactionDTO transactionDtoToSave;
-  private Transaction transaction;
+  private Transaction fakeSavedTransaction;
   private Account account;
 
   @BeforeEach
   public void init() {
+    account = Account.builder().id(ACCOUNT_ID).documentNumber(DOCUMENT_NUMBER).build();
+
     transactionDtoToSave =
         TransactionDTO
             .builder()
             .id(ACCOUNT_ID)
             .operationTypeId(OperationType.COMPRA_A_VISTA.getId())
             .accountId(ACCOUNT_ID)
-            .amount(BigDecimal.ZERO)
+            .amount(BigDecimal.TEN)
             .build();
 
-    account = Account.builder().id(ACCOUNT_ID).documentNumber(DOCUMENT_NUMBER).build();
-
-    transaction =
+    fakeSavedTransaction =
         Transaction
             .builder()
             .id(ACCOUNT_ID)
             .operationType(OperationType.COMPRA_A_VISTA)
             .account(account)
             .eventDate(LocalDateTime.now())
-            .amount(BigDecimal.ZERO)
+            .amount(BigDecimal.TEN)
             .build();
   }
 
   @Test
-  void save() {
+  void saveAndValidateAmountWithNegativeValue() {
 
     when(accountService.findOptionalById(ACCOUNT_ID)).thenReturn(Optional.of(account));
-    when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
+    when(transactionRepository.save(any(Transaction.class))).thenReturn(fakeSavedTransaction);
 
-    TransactionDTO retTrDTO = transactionService.save(transactionDtoToSave);
-    verify(transactionRepository).save(any(Transaction.class));
+    TransactionDTO returnedDTO = transactionService.save(transactionDtoToSave);
+    verify(transactionRepository).save(transactionArgumentCaptor.capture());
 
-    assertEquals(retTrDTO.getAccountId(), transactionDtoToSave.getAccountId());
-    assertEquals(retTrDTO.getOperationTypeId(),
+    assertEquals(returnedDTO.getAccountId(), transactionDtoToSave.getAccountId());
+    assertEquals(returnedDTO.getOperationTypeId(),
         transactionDtoToSave.getOperationTypeId());
-    assertNotNull(retTrDTO.getEventDate());
+    assertNotNull(returnedDTO.getEventDate());
+    assertTrue(transactionArgumentCaptor.getValue().getAmount().signum() == -1);
+  }
+
+  @Test
+  void saveAndValidateAmountWithPositiveValue() {
+
+    transactionDtoToSave.setOperationTypeId(OperationType.PAGAMENTO.getId());
+
+    when(accountService.findOptionalById(ACCOUNT_ID)).thenReturn(Optional.of(account));
+    when(transactionRepository.save(any(Transaction.class))).thenReturn(fakeSavedTransaction);
+
+    TransactionDTO returnedDTO = transactionService.save(transactionDtoToSave);
+    verify(transactionRepository).save(transactionArgumentCaptor.capture());
+
+    assertTrue(transactionArgumentCaptor.getValue().getAmount().signum() == 1);
   }
 
   @Test
@@ -104,6 +118,15 @@ class TransactionServiceTest {
     transactionDtoToSave.setOperationTypeId(5);
     when(accountService.findOptionalById(ACCOUNT_ID)).thenReturn(Optional.of(account));
     Assertions.assertThrows(OperationTypeNotFoundException.class, () -> {
+      transactionService.save(transactionDtoToSave);
+    });
+  }
+
+  @Test
+  void saveThrowsTransactionAmountInvalidException() {
+    transactionDtoToSave.setAmount(null);
+    when(accountService.findOptionalById(ACCOUNT_ID)).thenReturn(Optional.of(account));
+    Assertions.assertThrows(TransactionAmountInvalidException.class, () -> {
       transactionService.save(transactionDtoToSave);
     });
   }
