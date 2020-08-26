@@ -1,7 +1,5 @@
 # Pismo Transactions
 
-Aplicação Spring Boot 2.3 para contas e transações.
-
 
 ## Requisitos do projeto
 
@@ -25,7 +23,7 @@ docker-compose up -d
 ```
 
 
-Caso seja necessário alterar as configurações do BD devido a alterações no docker-composeyaml, editar o arquivo application.properties e alterar as propriedades abaixo:
+Caso seja necessário alterar as configurações do BD devido a alterações no docker-compose.yaml, editar o arquivo application.properties e alterar as propriedades abaixo:
 
 ```
 spring.datasource.url=jdbc:mysql://localhost:3306/pismo
