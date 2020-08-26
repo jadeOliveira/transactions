@@ -16,7 +16,7 @@ volumes:
     - /C/dev/docker/mysql/mysql_data:/var/lib/mysql
 ```
 
-Executar o comando docker-compose para subir o container:
+Executar o comando **docker-compose** dentro da pasta compose do projeto para subir o container:
 
 ```bash
 docker-compose up -d
