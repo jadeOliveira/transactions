@@ -1,6 +1,6 @@
 # Criar Conta
 
-**URL** : `/accounts`
+**URL** : `/transactions`
 
 **Método** : `POST`
 
