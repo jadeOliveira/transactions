@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/transactions")
+@RequestMapping(value = "/transactions", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TransactionController {
 
   @NonNull
   private final TransactionService transactionService;
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   public TransactionDTO save(@RequestBody final TransactionDTO transactionDTO) {
     return transactionService.save(transactionDTO);
   }

@@ -2,7 +2,7 @@
 
 Consulta todas as informações da conta.
 
-**URL** : `/accounts?accountId=<ACCOUNT_ID>`
+**URL** : `/accounts/:accountId`
 
 **Método** : `GET`
 
