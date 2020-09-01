@@ -12,6 +12,7 @@ import br.com.pismo.transactions.business.entity.Account;
 import br.com.pismo.transactions.business.entity.Transaction;
 import br.com.pismo.transactions.business.enumeration.OperationType;
 import br.com.pismo.transactions.business.exception.AccountNotFoundException;
+import br.com.pismo.transactions.business.exception.AvailableCreditLimitException;
 import br.com.pismo.transactions.business.exception.OperationTypeNotFoundException;
 import br.com.pismo.transactions.business.exception.TransactionAmountInvalidException;
 import br.com.pismo.transactions.business.repository.TransactionRepository;
@@ -52,7 +53,8 @@ class TransactionServiceTest {
 
   @BeforeEach
   public void init() {
-    account = Account.builder().id(ACCOUNT_ID).documentNumber(DOCUMENT_NUMBER).build();
+    account = Account.builder().id(ACCOUNT_ID).documentNumber(DOCUMENT_NUMBER)
+        .availableCreditLimit(BigDecimal.TEN).build();
 
     transactionDtoToSave =
         TransactionDTO
@@ -145,6 +147,24 @@ class TransactionServiceTest {
     Assertions.assertThrows(TransactionAmountInvalidException.class, () -> {
       transactionService.save(transactionDtoToSave);
     });
+  }
+
+  @Test
+  void saveThrowsAvailableCreditLimitException() {
+    account.setAvailableCreditLimit(BigDecimal.ONE);
+    transactionDtoToSave.setOperationTypeId(OperationType.COMPRA_A_VISTA.getId());
+    transactionDtoToSave.setAmount(BigDecimal.TEN);
+    when(accountService.findOptionalById(ACCOUNT_ID)).thenReturn(Optional.of(account));
+    Assertions.assertThrows(AvailableCreditLimitException.class, () -> {
+      transactionService.save(transactionDtoToSave);
+    });
+  }
+
+  @Test
+  void calculateAvailableCreditLimit() {
+    BigDecimal newAvailableCreditLimit = transactionService
+        .calculateAvailableCreditLimit(account, BigDecimal.ONE);
+    Assertions.assertEquals(newAvailableCreditLimit, BigDecimal.valueOf(11));
   }
 
 }

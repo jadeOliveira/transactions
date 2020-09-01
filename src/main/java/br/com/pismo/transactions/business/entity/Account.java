@@ -1,6 +1,7 @@
 package br.com.pismo.transactions.business.entity;
 
 import com.sun.istack.NotNull;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,9 @@ public class Account implements Serializable {
   @NotNull
   @Column(name = "document_number")
   private String documentNumber;
+
+  @Column(name = "available_credit_limit")
+  private BigDecimal availableCreditLimit;
 
   public Account() {
   }

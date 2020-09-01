@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    
+    <changeSet id="1" author="jadeOliveira">
+        <comment>Criacao da coluna AvailableCreditLimit em ACCOUNT</comment>
+
+        <addColumn tableName="account" schemaName="pismo">
+          <column name="available_credit_limit" type="decimal(15, 2)">
+            <constraints nullable="false"/>
+          </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="account" columnName="available_credit_limit"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
+

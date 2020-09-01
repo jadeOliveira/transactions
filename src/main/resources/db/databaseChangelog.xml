@@ -7,6 +7,9 @@
     
     <include file="db/changelog/1.00/metadata/account.xml"/>
     <include file="db/changelog/1.00/metadata/transaction.xml"/>
-	<include file="db/changelog/1.00/tag.xml"/>
+	  <include file="db/changelog/1.00/tag.xml"/>
+
+    <include file="db/changelog/1.01/metadata/account.xml"/>
+    <include file="db/changelog/1.01/tag.xml"/>
 
 </databaseChangeLog> 

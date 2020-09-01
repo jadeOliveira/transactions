@@ -5,13 +5,13 @@ import br.com.pismo.transactions.business.entity.Account;
 import br.com.pismo.transactions.business.entity.Transaction;
 import br.com.pismo.transactions.business.enumeration.OperationType;
 import br.com.pismo.transactions.business.exception.AccountNotFoundException;
+import br.com.pismo.transactions.business.exception.AvailableCreditLimitException;
 import br.com.pismo.transactions.business.exception.OperationTypeNotFoundException;
 import br.com.pismo.transactions.business.exception.TransactionAmountInvalidException;
 import br.com.pismo.transactions.business.repository.TransactionRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import javax.swing.text.html.Option;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,8 @@ public class TransactionService {
 
   private Transaction dtoToEntity(final TransactionDTO transactionDTO) {
 
-    Long accountId = Optional.ofNullable(transactionDTO.getAccountId()).orElseThrow(AccountNotFoundException::new);
+    Long accountId = Optional.ofNullable(transactionDTO.getAccountId())
+        .orElseThrow(AccountNotFoundException::new);
     Account account = accountService.findOptionalById(transactionDTO.getAccountId())
         .orElseThrow(AccountNotFoundException::new);
 
@@ -45,6 +46,10 @@ public class TransactionService {
     BigDecimal amount = Optional.ofNullable(transactionDTO.getAmount())
         .map(o -> calculateAmount(operationType, transactionDTO.getAmount()))
         .orElseThrow(TransactionAmountInvalidException::new);
+
+    BigDecimal newCreditLimit = calculateAvailableCreditLimit(account, amount);
+
+    accountService.updateAvailableCreditLimit(account, newCreditLimit);
 
     Transaction transaction = Transaction
         .builder()
@@ -57,6 +62,17 @@ public class TransactionService {
     return transaction;
 
   }
+
+  public BigDecimal calculateAvailableCreditLimit(Account account, BigDecimal transactionAmount) {
+
+    BigDecimal newAvailableCreditLimit = account.getAvailableCreditLimit().add(transactionAmount);
+    if (newAvailableCreditLimit.compareTo(BigDecimal.ZERO) < 0) {
+      throw new AvailableCreditLimitException();
+    }
+
+    return newAvailableCreditLimit;
+  }
+
 
   private TransactionDTO entityToDTO(final Transaction transaction) {
     return TransactionDTO.builder()

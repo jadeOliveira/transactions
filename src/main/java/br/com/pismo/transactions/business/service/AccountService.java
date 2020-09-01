@@ -3,8 +3,10 @@ package br.com.pismo.transactions.business.service;
 import br.com.pismo.transactions.business.dto.AccountDTO;
 import br.com.pismo.transactions.business.entity.Account;
 import br.com.pismo.transactions.business.exception.AccountNotFoundException;
+import br.com.pismo.transactions.business.exception.CreditLimitInvalidException;
 import br.com.pismo.transactions.business.exception.InvalidDocumentNumber;
 import br.com.pismo.transactions.business.repository.AccountRepository;
+import java.math.BigDecimal;
 import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -29,21 +31,34 @@ public class AccountService {
     return entityToDTO(accountRepository.save(dtoToEntity(accountDTO)));
   }
 
+  public void updateAvailableCreditLimit(Account account, BigDecimal availableCreditLimit) {
+    account.setAvailableCreditLimit(availableCreditLimit);
+    accountRepository.save(account);
+  }
+
   public Optional<Account> findOptionalById(Long id) {
     return accountRepository.findById(id);
   }
 
   private Account dtoToEntity(final AccountDTO accountDTO) {
+
     if (StringUtils.isEmpty(accountDTO.getDocumentNumber()) || !StringUtils
         .isNumeric(accountDTO.getDocumentNumber())) {
       throw new InvalidDocumentNumber();
     }
+
+    BigDecimal availableLimiteCredit = Optional.ofNullable(accountDTO.getAvailableCreditLimit())
+        .orElseThrow(
+            CreditLimitInvalidException::new);
+
     return Account.builder().id(accountDTO.getId()).documentNumber(accountDTO.getDocumentNumber())
+        .availableCreditLimit(availableLimiteCredit)
         .build();
   }
 
   private AccountDTO entityToDTO(final Account account) {
     return AccountDTO.builder().id(account.getId()).documentNumber(account.getDocumentNumber())
+        .availableCreditLimit(account.getAvailableCreditLimit())
         .build();
   }
 
