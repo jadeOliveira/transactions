@@ -10,8 +10,8 @@ services:
       MYSQL_DATABASE: pismo
     ports:
       - "3306:3306"
-    volumes:
-        - /C/dev/docker/mysql/mysql_data:/var/lib/mysql
+    #volumes:
+    #    - ~/rp/docker/mysql/mysql_data:/var/lib/mysql
 
   adminer:
     image: adminer
