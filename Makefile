@@ -31,7 +31,7 @@ docker-compose-up: ## Run docker-compose services of project
 	$(DOCKERCOMPOSECMD) -f $(DOCKER_COMPOSE_FILE_DIR) up -d
 
 docker-compose-down: ## Stop docker-compose services of project
-	$(DOCKERCOMPOSECMD) -f $(DOCKER_COMPOSE_FILE_DIR down) --remove-orphans
+	$(DOCKERCOMPOSECMD) -f $(DOCKER_COMPOSE_FILE_DIR) down --remove-orphans
 
 docker-compose-restart: docker-compose-down docker-compose-up ## Restart docker-compose services of project
 

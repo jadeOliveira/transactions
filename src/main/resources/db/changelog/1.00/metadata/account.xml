@@ -8,7 +8,7 @@
     <changeSet id="1" author="jadeOliveira">
         <comment>Criacao da tabela ACCOUNT</comment>
 
-        <createTable tableName="account" schemaName="pismo">
+        <createTable tableName="account" schemaName="jademe">
            <column autoIncrement="true" type="BIGINT" name="id">
 				<constraints nullable="false" primaryKey="true"/>
 			</column>

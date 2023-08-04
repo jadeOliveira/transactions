@@ -1,10 +1,10 @@
-# Pismo Transactions
+# Transactions
 
 
 ## Requisitos do projeto
 
 - Gradle 6.6
-- OpenJDK 14.0.1
+- OpenJDK 11
 - Docker
 
 ## Configurações do projeto
@@ -12,9 +12,9 @@
 Caso seja necessário alterar as configurações do BD devido a alterações no docker-compose.yaml, editar o arquivo application.properties e alterar as propriedades abaixo:
 
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/pismo
+spring.datasource.url=jdbc:mysql://localhost:3306/jademe
 spring.datasource.username=root
-spring.datasource.password=pismo
+spring.datasource.password=jademe
 ```
 Se quiser customizar o arquivo compose/docker-compose.yml e configurar o volume para um diretório local:
 

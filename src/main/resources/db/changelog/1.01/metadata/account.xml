@@ -8,7 +8,7 @@
     <changeSet id="1" author="jadeOliveira">
         <comment>Criacao da coluna AvailableCreditLimit em ACCOUNT</comment>
 
-        <addColumn tableName="account" schemaName="pismo">
+        <addColumn tableName="account" schemaName="jademe">
           <column name="available_credit_limit" type="decimal(15, 2)">
             <constraints nullable="false"/>
           </column>

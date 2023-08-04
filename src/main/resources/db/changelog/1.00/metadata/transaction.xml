@@ -8,7 +8,7 @@
     <changeSet id="1" author="jadeOliveira">
         <comment>Criacao da tabela TRANSACTION</comment>
 
-        <createTable schemaName="pismo" tableName="transaction">
+        <createTable schemaName="jademe" tableName="transaction">
            <column autoIncrement="true" type="BIGINT" name="id">
 				<constraints nullable="false" primaryKey="true"/>
 			</column>
@@ -33,8 +33,8 @@
     <changeSet id="2" author="jadeOliveira" runInTransaction="true">
         <comment>Criacao da chave estrangeira FK_ACCOUNT_ID</comment>
         <addForeignKeyConstraint constraintName="fk_account_id"
-                                 referencedTableName="account" referencedColumnNames="id" referencedTableSchemaName="pismo"
-                                 baseTableName="transaction" baseColumnNames="account_id" baseTableSchemaName="pismo" />
+                                 referencedTableName="account" referencedColumnNames="id" referencedTableSchemaName="jademe"
+                                 baseTableName="transaction" baseColumnNames="account_id" baseTableSchemaName="jademe" />
         <rollback>
             <dropForeignKeyConstraint baseTableName="transaction" constraintName="fk_account_id" />
         </rollback>
