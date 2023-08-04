@@ -47,9 +47,12 @@ public class AccountService {
       throw new InvalidDocumentNumber();
     }
 
-    BigDecimal availableLimiteCredit = Optional.ofNullable(accountDTO.getAvailableCreditLimit())
-        .orElseThrow(
-            CreditLimitInvalidException::new);
+    BigDecimal availableLimiteCredit = new BigDecimal(0);
+    if (accountDTO.getId() != null) {
+        availableLimiteCredit = Optional.ofNullable(accountDTO.getAvailableCreditLimit())
+              .orElseThrow(
+                      CreditLimitInvalidException::new);
+    }
 
     return Account.builder().id(accountDTO.getId()).documentNumber(accountDTO.getDocumentNumber())
         .availableCreditLimit(availableLimiteCredit)
