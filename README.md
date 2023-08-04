@@ -9,20 +9,6 @@
 
 ## Configurações do projeto
 
-Abrir o arquivo compose/docker-compose.yml e configurar o volume para um diretório local:
-
-```yaml
-volumes:
-    - /C/dev/docker/mysql/mysql_data:/var/lib/mysql
-```
-
-Executar o comando **docker-compose** dentro da pasta compose do projeto para subir o container:
-
-```bash
-docker-compose up -d
-```
-
-
 Caso seja necessário alterar as configurações do BD devido a alterações no docker-compose.yaml, editar o arquivo application.properties e alterar as propriedades abaixo:
 
 ```
@@ -30,27 +16,23 @@ spring.datasource.url=jdbc:mysql://localhost:3306/pismo
 spring.datasource.username=root
 spring.datasource.password=pismo
 ```
+Se quiser customizar o arquivo compose/docker-compose.yml e configurar o volume para um diretório local:
+
+```yaml
+volumes:
+    - /C/dev/docker/mysql/mysql_data:/var/lib/mysql
+```
+Executar o comando **docker-compose** através do make para subir o container:
+
+```bash
+make docker-compose-up
+```
 
 Todas as entidades necessárias são criadas automaticamente pela aplicação através de scripts do liquibase.
 
-### Build do projeto
+## Makefile:
 
-```bash
-gradle clean build
-```
-
-### Executar
-
-```bash
-gradle clean bootRun
-```
-
-### Construir executável
-
-```bash
-gradle clean bootJar
-```
-
+Usar ``makefile help`` para verificar a lista de comandos disponíveis.
 
 
 ## Endpoints
