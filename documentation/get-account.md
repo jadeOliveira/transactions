@@ -15,13 +15,13 @@ Consulta todas as informações da conta.
 **Código** : `200 - OK`
 
 **Response body:**
-
 ```
 {
     "id": 5,
     "documentNumber": "1234567890"
 }
 ```
+
 ### ERRO
 
 **Código** : `400 - BAD REQUEST`

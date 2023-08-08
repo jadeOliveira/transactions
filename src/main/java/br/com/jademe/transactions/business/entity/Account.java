@@ -1,13 +1,12 @@
 package br.com.jademe.transactions.business.entity;
 
-import com.sun.istack.NotNull;
-import java.math.BigDecimal;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -20,7 +19,7 @@ public class Account implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotNull
+  //@NotNull
   @Column(name = "document_number")
   private String documentNumber;
 

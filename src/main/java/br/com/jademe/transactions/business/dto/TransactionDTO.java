@@ -3,7 +3,6 @@ package br.com.jademe.transactions.business.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
