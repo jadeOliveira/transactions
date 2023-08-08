@@ -15,17 +15,6 @@ help: ## Display help screen
 	@echo "Commands: \n"
 	@grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-clean: ## gradle clean files
-	$(GRADLE_CMD) clean
-
-build: ## Run the gradle project build
-	$(GRADLE_CMD) clean build
-
-buildBootJar: ## Run the gradle project bootJar
-	$(GRADLE_CMD) clean bootJar
-
-run: ## Run the project
-	$(GRADLE_CMD) clean bootRun
 
 docker-compose-up: ## Run docker-compose services of project
 	$(DOCKERCOMPOSECMD) -f $(DOCKER_COMPOSE_FILE_DIR) up -d
@@ -41,3 +30,14 @@ docker-compose-logs: ## Logs docker-compose containers of project
 docker-compose-ps: ## List docker-compose containers of project
 	$(DOCKERCOMPOSECMD) -f $(DOCKER_COMPOSE_FILE_DIR) ps
 
+test: ## gradle clean files
+	$(GRADLE_CMD) clean test --info
+
+run: ## Run the project
+	$(GRADLE_CMD) clean bootRun
+
+build: ## Run the gradle project build
+	$(GRADLE_CMD) clean build
+
+buildBootJar: ## Run the gradle project buildBootJar
+	$(GRADLE_CMD) clean bootJar

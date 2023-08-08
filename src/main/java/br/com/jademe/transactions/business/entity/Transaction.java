@@ -1,11 +1,11 @@
 package br.com.jademe.transactions.business.entity;
 
 import br.com.jademe.transactions.business.enumeration.OperationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
