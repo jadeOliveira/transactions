@@ -34,8 +34,7 @@ public class TimelineService {
 
         HashMap<String, AttributeValue> itemValues = new HashMap<>();
         itemValues.put(UUID_FIELD, AttributeValue.builder().s(UUID.randomUUID().toString()).build());
-        itemValues.put(ACCOUNT_ID_FIELD, AttributeValue.builder().s(timelineDTO.getAccountId()).build());
-        itemValues.put(DATA_FIELD, AttributeValue.builder().s(timelineDTO.getData()).build());
+        itemValues.put(ACCOUNT_ID_FIELD, AttributeValue.builder().s(timelineDTO.getAccountId().toString()).build());
 
         PutItemRequest request = PutItemRequest.builder()
                 .tableName(TABLE_NAME)
