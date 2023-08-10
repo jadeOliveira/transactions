@@ -34,7 +34,7 @@ test: ## gradle clean files
 	$(GRADLE_CMD) clean test --info
 
 run: ## Run the project
-	$(GRADLE_CMD) clean bootRun
+	$(GRADLE_CMD) clean bootRun -Dcom.amazonaws.sdk.disableCertChecking=true
 
 build: ## Run the gradle project build
 	$(GRADLE_CMD) clean build

@@ -43,17 +43,13 @@ public class TimelineService {
 
         try {
             PutItemResponse response = ddb.putItem(request);
-            System.out.println(TABLE_NAME + " was successfully updated. The request id is " + response.responseMetadata().requestId());
+            log.info(TABLE_NAME + " was successfully updated. The request id is " + response.responseMetadata().requestId());
         } catch (ResourceNotFoundException e) {
-            System.err.format("Error: The Amazon DynamoDB table \"%s\" can't be found.\n", TABLE_NAME);
-            System.err.println("Be sure that it exists and that you've typed its name correctly!");
-            System.exit(1);
+            log.error("Error: The Amazon DynamoDB table \"%s\" can't be found.\n. System.err.println(\"\");", TABLE_NAME);
         } catch (DynamoDbException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
+            log.error(e.getMessage());
         }
     }
-
 
     private DynamoDbClient getDynamoClient() {
         ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create();
@@ -62,6 +58,7 @@ public class TimelineService {
                 .credentialsProvider(credentialsProvider)
                 .region(region)
                 .build();
+
         return ddb;
     }
 
