@@ -92,7 +92,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"accountId\":\"1\", \n\t\"operationTypeId\":\"4\",\n\t\"amount\":\"100\"\n}",
+					"raw": "{\n\t\"accountId\":\"1\", \n\t\"operationTypeId\":\"1\",\n\t\"amount\":\"10\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -108,6 +108,40 @@
 					"port": "8080",
 					"path": [
 						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "timeline",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"accountId\":\"1\", \n\t\"data\": [\n        {\n            \"id\": 1,\n            \"message\": \"Conta criada\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/timeline",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"timeline"
 					]
 				}
 			},

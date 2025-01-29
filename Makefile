@@ -34,10 +34,14 @@ test: ## gradle clean files
 	$(GRADLE_CMD) clean test --info
 
 run: ## Run the project
-	$(GRADLE_CMD) clean bootRun
+	$(GRADLE_CMD) clean bootRun -Dcom.amazonaws.sdk.disableCertChecking=true
 
 build: ## Run the gradle project build
 	$(GRADLE_CMD) clean build
 
 buildBootJar: ## Run the gradle project buildBootJar
 	$(GRADLE_CMD) clean bootJar
+
+awsconfig: ## Run the gradle project buildBootJar
+	aws configure import --csv file://credentials.csv
+

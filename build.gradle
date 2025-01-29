@@ -44,6 +44,10 @@ dependencies {
 	dependencies {
 		compileOnly 'com.google.googlejavaformat:google-java-format:1.17.0'
 	}
+	implementation group: 'software.amazon.awssdk', name: 'dynamodb', version: '2.20.121'
+	implementation group: 'software.amazon.awssdk', name: 'auth', version: '2.20.121'
+
+
 }
 
 test {
